@@ -2,6 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+// TODO: 想要輸出js到js夾，css到css夾，圖片到images夾
+
 module.exports = {
   // Set 'mode' option to 'development' or 'production'
   mode: 'development',
@@ -20,6 +22,7 @@ module.exports = {
   plugins: [
     // 動態生成html，輸出到dist (因為hash後js、css每次檔名都不同，所以要動態生成就不用手動改檔名。)
     new HtmlWebpackPlugin({
+      title: 'New Title',
       template: './src/base.html',
     }),
     // 把 css 抽離，輸出到 dist
@@ -32,7 +35,16 @@ module.exports = {
       // css 相關 loader 執行順序由右到左 sass-loader > css-loader > MiniCssExtractPlugin
       {
         test: /\.(css|scss)$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '/',
+            },
+          },
+          'css-loader',
+          'sass-loader',
+        ],
       },
       // babel 相關的 rules (需手動建立 babel.config.json)
       {
