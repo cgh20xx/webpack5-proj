@@ -1,0 +1,9 @@
+$bgColor: #9cf;
+$fontColor: red;
+body {
+  background-color: $bgColor;
+  div {
+    font-size: 50px;
+    color: $fontColor;
+  }
+}
